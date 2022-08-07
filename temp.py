@@ -1,51 +1,36 @@
-# import cv2
-# import streamlit as st
-
-# # vid = cv2.VideoCapture(1)
-  
-# # while(True):
-# #     ret, frame = vid.read()
-# #     cv2.imshow('frame', frame)
-# #     if cv2.waitKey(1) & 0xFF == ord('q'):
-# #         break
-
-# # vid.release()
-# # cv2.destroyAllWindows()
-
-# st.title("Webcam Live Feed")
-# run = st.checkbox('Run')
-# FRAME_WINDOW = st.image([])
-# camera = cv2.VideoCapture(902)
-
-# while run:
-#     _, frame = camera.read()
-#     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#     FRAME_WINDOW.image(frame)
-# else:
-#     st.write('Stopped')
-
 import cv2
 import av
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
+import streamlit as st
 
-def process(image):
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+st.set_page_config(page_title='IEEE CS PESU', page_icon='🏆')
+'''
+# IEEE CS PESU Summer Project
+# Project Title Here
+## Team Members -
+
+1. Vaibhav Vemula (PES1UG19CS***)
+2. Vaibhav Vemula (PES1UG19CS***)
+3. Vaibhav Vemula (PES1UG19CS***)
+'''
+
+def predict(image):
+    
+    
     return cv2.flip(image, 1)
 
-RTC_CONFIGURATION = RTCConfiguration(
-    {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
-)
-class VideoProcessor:
+
+class VideoCapture:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        img = process(img)
+        img = predict(img)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
     
-webrtc_ctx = webrtc_streamer(
-    key="WYH",
+webrtc_streamer(
+    key="TEST",
     mode=WebRtcMode.SENDRECV,
-    rtc_configuration=RTC_CONFIGURATION,
+    rtc_configuration=RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}),
     media_stream_constraints={"video": True, "audio": False},
-    video_processor_factory=VideoProcessor,
+    video_processor_factory=VideoCapture,
     async_processing=True,
 )
