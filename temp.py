@@ -2,6 +2,7 @@ import cv2
 import av
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 import streamlit as st
+import base64
 
 st.set_page_config(page_title='IEEE CS PESU', page_icon='🏆')
 '''
@@ -34,3 +35,15 @@ webrtc_streamer(
     video_processor_factory=VideoCapture,
     async_processing=True,
 )
+
+
+'''### NOTE:'''
+st.markdown(f'''
+        <h6>
+            When using this application on a MOBILE BROWSER, click the "PLAY" button
+            <img width=130 src="data:image/png;base64,
+            {base64.b64encode(open('images/playimg.png', "rb").read()).decode()}">
+            and wait 1-2 minutes.
+        </h6>
+    ''', unsafe_allow_html=True)
+
